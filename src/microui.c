@@ -1153,6 +1153,10 @@ int mu_begin_window_ex(mu_Context *ctx, const char *title, mu_Rect rect, int opt
   if (opt & MU_OPT_POPUP && ctx->mouse_pressed && ctx->hover_root != cnt) {
     cnt->open = 0;
   }
+  //Also close if any keyboard input is pressed
+  if (opt & MU_OPT_POPUP && (strlen(ctx->input_text) > 0 || ctx->key_pressed & MU_KEY_RETURN)) {
+        cnt->open = 0;
+  }
 
   mu_push_clip_rect(ctx, cnt->body);
   return MU_RES_ACTIVE;
